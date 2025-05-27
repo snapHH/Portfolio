@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanket Hadap - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f9ff; /* Lighter Sky Blue background */
+            color: #0f172a; /* Slate 900 text */
+        }
+        .section-title {
+            @apply text-4xl font-bold text-center mb-12 text-teal-600;
+        }
+        .card {
+            @apply bg-white rounded-xl shadow-2xl p-6 md:p-8 transition-all duration-300 hover:shadow-teal-300/50 hover:scale-105;
+        }
+
+        /* Navigation Link Styling */
+        .nav-link {
+            @apply px-4 py-2 text-lg font-medium text-slate-700 transition-all duration-300 rounded-lg relative overflow-hidden z-0 border border-slate-200 bg-slate-50 shadow-sm;
+            /* Base button appearance */
+        }
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%; /* Start off-screen */
+            width: 100%;
+            height: 100%;
+            transition: left 0.35s ease-out;
+            z-index: -1; /* Behind the text */
+            border-radius: 0.375rem; /* 6px, consistent with parent's rounded-lg */
+        }
+        .nav-link:hover::before {
+            left: 0; /* Slide in on hover */
+        }
+        .nav-link:hover {
+            color: white !important; /* Ensure text becomes white on hover over any background */
+            border-color: transparent; /* Hide border when background slides in */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Slightly lift */
+        }
+
+        /* Individual hover colors for nav links */
+        .nav-link-about::before { background-color: #14b8a6; } /* Teal 500 */
+        .nav-link-skills::before { background-color: #0891b2; } /* Cyan 600 */
+        .nav-link-experience::before { background-color: #0284c7; } /* Sky 600 */
+        .nav-link-projects::before { background-color: #059669; } /* Emerald 600 */
+        .nav-link-education::before { background-color: #0d9488; } /* Teal 600 */
+        .nav-link-certifications::before { background-color: #0e7490; } /* Cyan 700 */
+        .nav-link-contact::before { background-color: #0369a1; } /* Sky 700 */
+
+
+        .nav-link-mobile {
+            @apply block px-4 py-3 text-lg font-medium text-slate-700 hover:bg-teal-100 hover:text-teal-600 transition-colors duration-300 rounded-md;
+        }
+        .btn-primary {
+            @apply bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 hover:scale-105;
+        }
+        .btn-secondary {
+            @apply bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold py-3 px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 hover:scale-105;
+        }
+        .tag {
+            @apply bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm font-medium mr-2 mb-2;
+        }
+        /* Animations */
+        .fade-in { animation: fadeIn 1s ease-out forwards; }
+        .slide-in-left { animation: slideInLeft 0.8s ease-out forwards; }
+        .slide-in-right { animation: slideInRight 0.8s ease-out forwards; }
+        .slide-in-bottom { animation: slideInBottom 0.8s ease-out forwards; }
+        
+        .is-visible .slide-in-left,
+        .is-visible .slide-in-right,
+        .is-visible .slide-in-bottom,
+        .is-visible .fade-in {
+            animation-play-state: running;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideInBottom { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f0f9ff; }
+        ::-webkit-scrollbar-thumb { background: #0d9488; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0f766e; }
+
+        .initial-animation { opacity: 0; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md shadow-lg sticky top-0 z-50 initial-animation fade-in">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="text-3xl font-bold text-teal-600">Sanket Hadap</a>
+            <div class="hidden md:flex space-x-2"> 
+                <a href="#about" class="nav-link nav-link-about">About</a>
+                <a href="#skills" class="nav-link nav-link-skills">Skills</a>
+                <a href="#experience" class="nav-link nav-link-experience">Experience</a>
+                <a href="#projects" class="nav-link nav-link-projects">Projects</a>
+                <a href="#education" class="nav-link nav-link-education">Education</a>
+                <a href="#certifications" class="nav-link nav-link-certifications">Certifications</a>
+                <a href="#contact" class="nav-link nav-link-contact">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-slate-700 hover:text-teal-600 focus:outline-none">
+                    <i class="fas fa-bars fa-lg"></i>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg rounded-b-lg">
+            <a href="#about" class="nav-link-mobile">About</a>
+            <a href="#skills" class="nav-link-mobile">Skills</a>
+            <a href="#experience" class="nav-link-mobile">Experience</a>
+            <a href="#projects" class="nav-link-mobile">Projects</a>
+            <a href="#education" class="nav-link-mobile">Education</a>
+            <a href="#certifications" class="nav-link-mobile">Certifications</a>
+            <a href="#contact" class="nav-link-mobile">Contact</a>
+        </div>
+    </header>
+
+    <section id="hero" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-500 via-cyan-500 to-sky-500 text-white initial-animation fade-in">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto">
+                <img src="https://placehold.co/150x150/FFFFFF/0D9488?text=SH" alt="Sanket Hadap" class="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto mb-8 border-4 border-white shadow-2xl initial-animation slide-in-bottom" style="animation-delay: 0.2s;">
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-4 initial-animation slide-in-left" style="animation-delay: 0.4s;">Sanket Hadap</h1>
+                <p class="text-2xl md:text-3xl font-light mb-8 initial-animation slide-in-right" style="animation-delay: 0.6s;">Master of Computer Application Student | Aspiring Software Developer</p>
+                <div class="space-x-4 mb-12 initial-animation slide-in-bottom" style="animation-delay: 0.8s;">
+                    <a href="https://linkedin.com/in/sanket-hadap-691214248" target="_blank" class="text-white hover:text-teal-100 transition-colors duration-300 text-3xl"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/snapHH" target="_blank" class="text-white hover:text-teal-100 transition-colors duration-300 text-3xl"><i class="fab fa-github"></i></a>
+                    <a href="mailto:sanketph01@gmail.com" class="text-white hover:text-teal-100 transition-colors duration-300 text-3xl"><i class="fas fa-envelope"></i></a>
+                </div>
+                <a href="#about" class="btn-primary text-xl initial-animation slide-in-bottom" style="animation-delay: 1s;">Learn More About Me <i class="fas fa-arrow-down ml-2"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 md:py-32">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title initial-animation">About Me</h2>
+            <div class="max-w-4xl mx-auto text-center text-lg md:text-xl text-slate-700 leading-relaxed space-y-6">
+                <p class="initial-animation">
+                    Hello! I'm Sanket Hadap, a passionate and dedicated Master of Computer Application student at the University of Mumbai. With a strong foundation in computer science and a keen interest in web development, I am eager to contribute to innovative projects and grow as a software developer.
+                </p>
+                <p class="initial-animation">
+                    My journey in tech has equipped me with a diverse skill set, including proficiency in languages like Python, Java, and JavaScript, and experience with modern frameworks such as React, Next.js, and Spring Boot. I thrive in collaborative environments and am committed to continuous learning and problem-solving.
+                </p>
+                <p class="initial-animation">
+                    During my internship at GE&PS Private Limited, I gained hands-on experience in developing interactive web applications, optimizing performance, and working with technologies like Docker and CI/CD pipelines. I'm excited about leveraging my skills to build impactful and user-centric solutions.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 md:py-32 bg-slate-100">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title initial-animation">My Skill Arsenal</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                <div class="card initial-animation">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-code text-3xl text-teal-500 mr-4"></i>
+                        <h3 class="text-2xl font-semibold text-slate-800">Languages</h3>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <span class="tag">Python</span><span class="tag">Java</span><span class="tag">JavaScript</span>
+                        <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Tailwind CSS</span>
+                        <span class="tag">SQL</span>
+                    </div>
+                </div>
+                <div class="card initial-animation" style="animation-delay: 0.1s;">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-cogs text-3xl text-cyan-500 mr-4"></i>
+                        <h3 class="text-2xl font-semibold text-slate-800">Frameworks & Libraries</h3>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Vue.js</span>
+                        <span class="tag">Spring Boot</span><span class="tag">Node.js</span><span class="tag">Vite.js</span>
+                    </div>
+                </div>
+                <div class="card initial-animation" style="animation-delay: 0.2s;">
+                     <div class="flex items-center mb-6">
+                        <i class="fas fa-tools text-3xl text-sky-500 mr-4"></i>
+                        <h3 class="text-2xl font-semibold text-slate-800">Tools & Technologies</h3>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <span class="tag">MySQL</span><span class="tag">Power BI</span><span class="tag">Tableau</span>
+                        <span class="tag">Figma</span><span class="tag">Docker</span><span class="tag">CI/CD</span>
+                    </div>
+                </div>
+                <div class="card initial-animation" style="animation-delay: 0.3s;">
+                     <div class="flex items-center mb-6">
+                        <i class="fas fa-desktop text-3xl text-emerald-500 mr-4"></i>
+                        <h3 class="text-2xl font-semibold text-slate-800">Software & Platforms</h3>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <span class="tag">Visual Studio Code</span><span class="tag">PyCharm</span><span class="tag">Jupyter Notebook</span>
+                        <span class="tag">Git</span><span class="tag">Github</span><span class="tag">AWS</span>
+                    </div>
+                </div>
+                <div class="card initial-animation col-span-1 md:col-span-2 lg:col-span-3 lg:col-start-2" style="animation-delay: 0.4s;">
+                     <div class="flex items-center mb-6">
+                        <i class="fas fa-users text-3xl text-amber-500 mr-4"></i>
+                        <h3 class="text-2xl font-semibold text-slate-800">Soft Skills</h3>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <span class="tag">Communication</span><span class="tag">Teamwork & Collaboration</span>
+                        <span class="tag">Problem-Solving</span><span class="tag">Time Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="py-20 md:py-32">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title initial-animation">Work Experience</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="card initial-animation">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+                        <h3 class="text-2xl font-semibold text-slate-800">Software Developer Intern</h3>
+                        <span class="text-teal-500 font-medium text-lg mt-2 sm:mt-0">2023 - 2024</span>
+                    </div>
+                    <p class="text-xl font-medium text-slate-600 mb-6">GE&PS Private Limited</p>
+                    <ul class="list-disc list-inside space-y-3 text-slate-700 text-lg leading-relaxed">
+                        <li>Assisted in developing interactive and user-friendly web applications, contributing to overall performance and user experience.</li>
+                        <li>Collaborated on optimizing load times by 25%, improving website responsiveness and efficiency.</li>
+                        <li>Gained hands-on experience using React, Next.js, HTML, JavaScript, CSS, Tailwind CSS, and Docker for containerization, website development and deployment, reducing development time by 20%.</li>
+                        <li>Contributed to creating responsive and aesthetically pleasing user interfaces, which led to a 30% increase in user engagement.</li>
+                        <li>Involved in full-stack development (70% front-end, 30% back-end), gaining exposure to the complete development lifecycle.</li>
+                        <li>Collaborated in an agile team, enhancing project delivery and communication.</li>
+                        <li>Participated in implementing CI/CD pipelines, helping streamline deployment and reduce deployment time by 35%.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-20 md:py-32 bg-slate-100">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title initial-animation">Featured Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                <div class="card initial-animation">
+                    <img src="https://placehold.co/600x400/E0F2F7/1D4ED8?text=Apple+Clone" alt="Apple Clone Project" class="rounded-lg mb-6 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/E0F2F7/1D4ED8?text=Image+Not+Found';">
+                    <h3 class="text-2xl font-semibold text-slate-800 mb-3">Apple-Clone Website</h3>
+                    <p class="text-slate-700 mb-4 leading-relaxed">A responsive Apple-clone website built using Vite.js, React, and Three.js. This modern web application leverages JavaScript, HTML5, and Tailwind CSS to deliver an immersive user experience with dynamic 3D graphics.</p>
+                    <div class="mb-4">
+                        <span class="tag">Vite.js</span><span class="tag">React</span><span class="tag">Three.js</span><span class="tag">Tailwind CSS</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/snapHH/Apple-Clone" target="_blank" class="btn-secondary text-sm py-2 px-4"><i class="fab fa-github mr-2"></i>GitHub</a>
+                        <a href="#" target="_blank" class="btn-primary text-sm py-2 px-4"><i class="fas fa-external-link-alt mr-2"></i>Live Demo</a>
+                    </div>
+                </div>
+
+                <div class="card initial-animation" style="animation-delay: 0.1s;">
+                    <img src="https://placehold.co/600x400/E0F2F7/1D4ED8?text=Interior+Firm" alt="Interior Firm Project" class="rounded-lg mb-6 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/E0F2F7/1D4ED8?text=Image+Not+Found';">
+                    <h3 class="text-2xl font-semibold text-slate-800 mb-3">Interior-Firm Website</h3>
+                    <p class="text-slate-700 mb-4 leading-relaxed">A dynamic portfolio website using Next.js, React, and Tailwind CSS. Showcased academic projects, skills, and achievements with an interactive and responsive design. Deployed on Vercel.</p>
+                     <div class="mb-4">
+                        <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Tailwind CSS</span><span class="tag">Vercel</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/snapHH/Interior-Firm" target="_blank" class="btn-secondary text-sm py-2 px-4"><i class="fab fa-github mr-2"></i>GitHub</a>
+                        <a href="#" target="_blank" class="btn-primary text-sm py-2 px-4"><i class="fas fa-external-link-alt mr-2"></i>Live Demo</a>
+                    </div>
+                </div>
+
+                <div class="card initial-animation" style="animation-delay: 0.2s;">
+                    <img src="https://placehold.co/600x400/E0F2F7/1D4ED8?text=Job+Portal" alt="Job Portal Project" class="rounded-lg mb-6 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/E0F2F7/1D4ED8?text=Image+Not+Found';">
+                    <h3 class="text-2xl font-semibold text-slate-800 mb-3">Job-Portal Website</h3>
+                    <p class="text-slate-700 mb-4 leading-relaxed">A full-stack job portal application using the MERN stack (MongoDB, Express.js, React, Node.js). Enables users to create profiles, search for jobs, and apply. Deployed on Vercel.</p>
+                    <div class="mb-4">
+                        <span class="tag">MERN Stack</span><span class="tag">MongoDB</span><span class="tag">Express.js</span><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Vercel</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/snapHH/job-portal" target="_blank" class="btn-secondary text-sm py-2 px-4"><i class="fab fa-github mr-2"></i>GitHub</a>
+                         <a href="#" target="_blank" class="btn-primary text-sm py-2 px-4"><i class="fas fa-external-link-alt mr-2"></i>Live Demo</a>
+                    </div>
+                </div>
+                
+                <div class="card initial-animation md:col-start-2 lg:col-start-auto" style="animation-delay: 0.3s;">
+                    <img src="https://placehold.co/600x400/E0F2F7/1D4ED8?text=Bus+Booking" alt="Bus Booking System Project" class="rounded-lg mb-6 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/E0F2F7/1D4ED8?text=Image+Not+Found';">
+                    <h3 class="text-2xl font-semibold text-slate-800 mb-3">Bus Booking System</h3>
+                    <p class="text-slate-700 mb-4 leading-relaxed">A scalable Bus Booking System using Java and Spring Boot for the backend, and Bootstrap, HTML5, JavaScript, CSS for the frontend to enhance user experience and streamline booking operations.</p>
+                    <div class="mb-4">
+                        <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">Bootstrap</span><span class="tag">HTML5</span><span class="tag">JavaScript</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/snapHH/Bus-Booking-System" target="_blank" class="btn-secondary text-sm py-2 px-4"><i class="fab fa-github mr-2"></i>GitHub</a>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="py-20 md:py-32">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title initial-animation">Education</h2>
+            <div class="max-w-3xl mx-auto space-y-10">
+                <div class="card initial-animation">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-slate-800">Master of Computer Application</h3>
+                            <p class="text-lg text-teal-500 font-medium">University of Mumbai</p>
+                        </div>
+                        <span class="text-slate-600 font-medium text-lg whitespace-nowrap ml-4">July 2024</span>
+                    </div>
+                    <p class="text-slate-700 mt-3 text-lg">CGPA: 8.17</p>
+                    <p class="text-slate-600 mt-1 text-md">Mumbai, Maharashtra, India</p>
+                </div>
+                <div class="card initial-animation" style="animation-delay: 0.1s;">
+                     <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-slate-800">Bachelor of Computer Science</h3>
+                            <p class="text-lg text-teal-500 font-medium">Nevjabai Hitkarini College</p>
+                        </div>
+                        <span class="text-slate-600 font-medium text-lg whitespace-nowrap ml-4">March 2022</span>
+                    </div>
+                    <p class="text-slate-700 mt-3 text-lg">CGPA: 8.02</p>
+                    <p class="text-slate-600 mt-1 text-md">Maharashtra, India</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications" class="py-20 md:py-32 bg-slate-100">
+        <div class="container mx-auto px-6">
+            <h2 class="section-title initial-animation">Certifications</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                <div class="card initial-animation">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-award text-3xl text-amber-500 mr-4"></i>
+                        <h3 class="text-xl font-semibold text-slate-800">Programming In Java</h3>
+                    </div>
+                    <p class="text-teal-500 font-medium mb-1">National Program Technology on Enhancement Learning (NPTEL)</p>
+                    <p class="text-slate-600 text-sm mb-3">April 2024</p>
+                    <p class="text-slate-700 leading-relaxed">Mastered core Java concepts including syntax, OOP principles, exception handling, collections, file I/O, and multithreading.</p>
+                </div>
+                <div class="card initial-animation" style="animation-delay: 0.1s;">
+                    <div class="flex items-center mb-4">
+                         <i class="fas fa-award text-3xl text-amber-500 mr-4"></i>
+                        <h3 class="text-xl font-semibold text-slate-800">Database Management System</h3>
+                    </div>
+                    <p class="text-teal-500 font-medium mb-1">National Program Technology on Enhancement Learning (NPTEL)</p>
+                    <p class="text-slate-600 text-sm mb-3">September 2023</p>
+                    <p class="text-slate-700 leading-relaxed">Acquired a deep understanding of database design, SQL, normalization, and transaction management.</p>
+                </div>
+                <div class="card initial-animation" style="animation-delay: 0.2s;">
+                    <div class="flex items-center mb-4">
+                         <i class="fas fa-award text-3xl text-amber-500 mr-4"></i>
+                        <h3 class="text-xl font-semibold text-slate-800">DSA with Java</h3>
+                    </div>
+                    <p class="text-teal-500 font-medium mb-1">APNA COLLEGE</p>
+                    <p class="text-slate-600 text-sm mb-3">December 2023</p>
+                    <p class="text-slate-700 leading-relaxed">Proficiency in fundamental data structures in Java, including arrays, linked lists, stacks, queues, trees, and graphs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="more-about-me" class="py-20 md:py-32 bg-slate-100"> 
+        <div class="container mx-auto px-6">
+            <h2 class="section-title initial-animation">A Little More About Me</h2>
+            <div class="max-w-3xl mx-auto text-center">
+                <p class="text-lg md:text-xl text-slate-700 leading-relaxed mb-10 initial-animation">
+                    Beyond coding and technology, I have a few passions that keep me energized and inspired:
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card initial-animation !p-6 text-center">
+                        <i class="fas fa-hiking text-5xl text-emerald-500 mb-4"></i>
+                        <h4 class="text-xl font-semibold text-slate-800 mb-2">Exploring Nature</h4>
+                        <p class="text-slate-600">Love going on treks and exploring scenic landscapes.</p>
+                    </div>
+                    <div class="card initial-animation !p-6 text-center" style="animation-delay: 0.1s;">
+                        <i class="fas fa-book-reader text-5xl text-sky-500 mb-4"></i>
+                        <h4 class="text-xl font-semibold text-slate-800 mb-2">Reading Tech Blogs</h4>
+                        <p class="text-slate-600">Always curious about the latest advancements in the tech world.</p>
+                    </div>
+                    <div class="card initial-animation !p-6 text-center sm:col-span-2 lg:col-span-1" style="animation-delay: 0.2s;">
+                        <i class="fas fa-gamepad text-5xl text-violet-500 mb-4"></i>
+                        <h4 class="text-xl font-semibold text-slate-800 mb-2">Strategic Gaming</h4>
+                        <p class="text-slate-600">Enjoy strategy-based video games that challenge the mind.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="contact" class="py-20 md:py-32 bg-gradient-to-br from-teal-500 via-cyan-500 to-sky-500 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8 initial-animation">Get In Touch</h2>
+            <p class="text-xl md:text-2xl mb-12 max-w-2xl mx-auto initial-animation" style="animation-delay: 0.1s;">
+                I'm always open to discussing new projects, creative ideas, or opportunities to be part of something amazing. Feel free to reach out!
+            </p>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-12 initial-animation" style="animation-delay: 0.2s;">
+                <div class="flex items-center text-xl">
+                    <i class="fas fa-envelope fa-2x mr-4"></i>
+                    <a href="mailto:sanketph01@gmail.com" class="hover:underline">sanketph01@gmail.com</a>
+                </div>
+                <div class="flex items-center text-xl">
+                    <i class="fas fa-phone-alt fa-2x mr-4"></i>
+                    <a href="tel:+917420840871" class="hover:underline">+91 7420840871</a>
+                </div>
+            </div>
+             <div class="mt-16 space-x-6 initial-animation" style="animation-delay: 0.3s;">
+                <a href="https://linkedin.com/in/sanket-hadap-691214248" target="_blank" class="text-white hover:text-teal-100 transition-colors duration-300 text-4xl"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/snapHH" target="_blank" class="text-white hover:text-teal-100 transition-colors duration-300 text-4xl"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-800 text-slate-300 py-12 text-center">
+        <div class="container mx-auto px-6">
+            <p class="mb-4">&copy; <span id="currentYear"></span> Sanket Hadap. All rights reserved.</p>
+            <p>Designed with <i class="fas fa-heart text-red-500"></i> and Tailwind CSS.</p>
+            <div class="mt-6">
+                <a href="#" id="backToTop" class="text-teal-400 hover:text-teal-300 transition-colors duration-300 text-lg">
+                    Back to Top <i class="fas fa-arrow-up ml-1"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Standard Page Interactivity ---
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = menuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        const mobileNavLinks = mobileMenu.querySelectorAll('a');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuBtn.querySelector('i').classList.remove('fa-times');
+                menuBtn.querySelector('i').classList.add('fa-bars');
+            });
+        });
+        
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const backToTopButton = document.getElementById('backToTop');
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // --- Intersection Observer for Animations ---
+        const animatedElements = document.querySelectorAll('.initial-animation');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1 
+        };
+
+        const observerCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1'; 
+                    entry.target.classList.add('is-visible'); 
+                    
+                    if (entry.target.classList.contains('slide-in-left')) {
+                        entry.target.style.animation = 'slideInLeft 0.8s ease-out forwards';
+                    } else if (entry.target.classList.contains('slide-in-right')) {
+                        entry.target.style.animation = 'slideInRight 0.8s ease-out forwards';
+                    } else if (entry.target.classList.contains('slide-in-bottom')) {
+                        entry.target.style.animation = 'slideInBottom 0.8s ease-out forwards';
+                    } else if (entry.target.classList.contains('fade-in')) {
+                         entry.target.style.animation = 'fadeIn 1s ease-out forwards';
+                    }
+                    else if (!entry.target.style.animationName || entry.target.style.animationName === 'none') {
+                        entry.target.style.animation = 'fadeIn 1s ease-out forwards';
+                    }
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+        const animationObserver = new IntersectionObserver(observerCallback, observerOptions);
+        
+        animatedElements.forEach(el => {
+            el.style.opacity = '0'; 
+
+            if (el.classList.contains('card') || el.closest('.card')) {
+                 if (!el.classList.contains('slide-in-left') && !el.classList.contains('slide-in-right') && !el.classList.contains('slide-in-bottom') && !el.classList.contains('fade-in')) {
+                    el.classList.add('slide-in-bottom');
+                 }
+            } else if (el.classList.contains('section-title') || el.closest('section > .container > h2')) {
+                 if (!el.classList.contains('slide-in-left') && !el.classList.contains('slide-in-right') && !el.classList.contains('slide-in-bottom') && !el.classList.contains('fade-in')) {
+                    el.classList.add('slide-in-left');
+                 }
+            } else if (el.tagName === 'P' && el.closest('#about')) {
+                const aboutParas = Array.from(el.closest('#about').querySelectorAll('p.initial-animation'));
+                const paraIndex = aboutParas.indexOf(el);
+                if (!el.classList.contains('slide-in-left') && !el.classList.contains('slide-in-right') && !el.classList.contains('fade-in')) {
+                    if (paraIndex % 2 === 0) {
+                        el.classList.add('slide-in-right');
+                    } else {
+                        el.classList.add('slide-in-left');
+                    }
+                }
+            } else if (!el.classList.contains('fade-in') && !el.classList.contains('slide-in-left') && !el.classList.contains('slide-in-right') && !el.classList.contains('slide-in-bottom')) {
+                 el.classList.add('fade-in');
+            }
+            animationObserver.observe(el);
+        });
+    </script>
+</body>
+</html>
